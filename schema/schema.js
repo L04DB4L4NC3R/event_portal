@@ -30,5 +30,8 @@ exports.teams = mongoose.model("team",new mongoose.Schema({
             }
         }],
         required:true
-    }
+    },
+    repo:String,
+    initialpitch:String,
+    finalpitch:String
 }));

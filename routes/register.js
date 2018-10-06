@@ -2,12 +2,13 @@ const {
     teams
 } = require("../schema/schema");
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
 
 /**
  * @api {post} /teams/add add a team
  * @apiName add a team
- * @apiGroup all
+ * @apiGroup team
  * 
  * @apiParamExample {json} request
  * {
@@ -56,6 +57,130 @@ router.post("/add",(req,res,next)=>{
     }).catch(next);
 });
 
+
+
+/**
+ * @api {post} /team/login login team
+ * @apiName login team
+ * @apiGroup team
+ * @apiParamExample {json} request
+ {
+	"username":"renegades",
+	"password":"5bb8fa2bd0cbc35fbd713e42"
+}
+ * @apiParamExample {json} response
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsZXZlbCI6InRlYW0iLCJuYW1lIjoicmVuZWdhZGVzIiwiaWF0IjoxNTM4ODUxNTU4fQ.BaT9c96LhZeh8KQxWXtmAnI5znhHCEYopGIRLGBYOTM"
+}
+ */
+router.post("/login",(req,res,next)=>{
+    teams.findOne({name:req.body.username})
+    .then((team)=>{
+        if(!team)
+            return res.json({message:"NO team found"});
+            console.log(req.body.password + "   " + team._id)
+        if(req.body.password==team._id){
+            jwt.sign({
+                level:"team",
+                name:team.name
+            },process.env.SECRET,(err,token)=>{
+                if(err)
+                    next(err);
+                res.json({token});
+            });
+        } else 
+            res.json({messgae:"username or password wrong"});
+    }).catch(next);
+});
+
+
+
+
+
+/**
+ * @api {post} /team/addRepo add repo 
+ * @apiName add repo 
+ * @apiGroup team
+ * @apiParamExample {json} request
+{
+	"data":"https://github.com/angadsharma1016/event_portal.git"
+}
+ * @apiParamExample {json} response
+{
+    "message": "Done",
+    "data": {
+        "_id": "5bb905017f0a27671ea517f0",
+        "name": "renegades",
+        "ppl": [
+            {
+                "_id": "5bb905017f0a27671ea517f1",
+                "name": "angad",
+                "email": "angadsharma1016@gmail.com",
+                "rollno": "17BCE2009",
+                "roomno": "Q753",
+                "phone": "9971673330"
+            }
+        ],
+        "__v": 0,
+        "repo": "https://github.com/angadsharma1016/event_portal.git"
+    }
+}
+ */
+router.post("/addRepo",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOneAndUpdate({name:data.name},{repo:req.body.data})
+        .then((d)=>res.json({message:"Done",data:d}))
+        .catch(next);
+    });
+});
+
+
+
+
+/**
+ * @api {post} /team/addPitch1 add initital pitch 
+ * @apiName add initital pitch 
+ * @apiGroup team
+ * @apiParamExample {json} request
+{
+	"data":"is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web "
+}   
+ */
+router.post("/addPitch1",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOneAndUpdate({name:data.name},{initialpitch:req.body.data})
+        .then((d)=>res.json({message:"Done",data:d}))
+        .catch(next);
+    });
+});
+
+
+
+
+
+/**
+ * @api {post} /team/addPitch2 add final pitch 
+ * @apiName add final pitch 
+ * @apiGroup team
+ * @apiParamExample {json} request
+{
+	"data":"is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web "
+}
+
+ */
+router.post("/addPitch2",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOneAndUpdate({name:data.name},{finalpitch:req.body.data})
+        .then((d)=>res.json({message:"Done",data:d}))
+        .catch(next);
+    });
+});
 
 
 module.exports = router;
