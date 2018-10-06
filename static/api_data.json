@@ -84,6 +84,25 @@
   },
   {
     "type": "post",
+    "url": "/teams/join",
+    "title": "join a team",
+    "group": "all",
+    "name": "join_a_team",
+    "parameter": {
+      "examples": [
+        {
+          "title": "request",
+          "content": "{\n\t\t\t\t\"name\": \"dhruv\",\n                \"email\": \"angadsharma101@gmail.com\",\n                \"rollno\": \"17BCE2000\",\n                \"roomno\": \"Q753\",\n                \"phone\": \"9971673330\",\n                \"team\":\"renegades\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/teams.js",
+    "groupTitle": "all"
+  },
+  {
+    "type": "post",
     "url": "/teams/add",
     "title": "add a team",
     "name": "add_a_team",

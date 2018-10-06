@@ -205,4 +205,36 @@ router.get("/unregister/:member",(req,res,next)=>{
         .catch(next);
     });
 });
+
+
+/**
+ * @api {post} /teams/join join a team
+ * @apiGroup all
+ * @apiName join a team
+ * 
+ * @apiParamExample {json} request
+ * {
+				"name": "dhruv",
+                "email": "angadsharma101@gmail.com",
+                "rollno": "17BCE2000",
+                "roomno": "Q753",
+                "phone": "9971673330",
+                "team":"renegades"
+}
+
+ */
+router.post("/join",(req,res,next)=>{
+    teams.findOne({name:req.body.team})
+    .then((d)=>{
+        for(let p of d.ppl){
+            if(p.rollno === req.body.rollno)
+                return res.json({message:"You are already added to the team"});
+        }
+        d.ppl.push(req.body);
+        d.save().then(()=>res.json({message:"Successfully added to the team"}))
+        .catch(next);
+    })
+    .catch(next);
+
+});
 module.exports = router;
