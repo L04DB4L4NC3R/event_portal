@@ -170,7 +170,7 @@ router.post("/addPitch2",(req,res,next)=>{
 
 /**
  * @api {get} /teams/unregister unregister team
- * @apiGroup teams
+ * @apiGroup team
  * @apiName unregister team
  * @apiPermission team
  */
@@ -190,7 +190,7 @@ router.get("/unregister",(req,res,next)=>{
 
 /**
  * @api {get} /teams/deluser/:user unregister member
- * @apiGroup teams
+ * @apiGroup team
  * @apiName unregister member
  * @apiPermission team
  */
