@@ -100,38 +100,20 @@ router.post("/login",(req,res,next)=>{
 /**
  * @api {post} /team/addRepo add repo 
  * @apiName add repo 
+ * @apiPermission team
  * @apiGroup team
  * @apiParamExample {json} request
 {
 	"data":"https://github.com/angadsharma1016/event_portal.git"
 }
- * @apiParamExample {json} response
-{
-    "message": "Done",
-    "data": {
-        "_id": "5bb905017f0a27671ea517f0",
-        "name": "renegades",
-        "ppl": [
-            {
-                "_id": "5bb905017f0a27671ea517f1",
-                "name": "angad",
-                "email": "angadsharma1016@gmail.com",
-                "rollno": "17BCE2009",
-                "roomno": "Q753",
-                "phone": "9971673330"
-            }
-        ],
-        "__v": 0,
-        "repo": "https://github.com/angadsharma1016/event_portal.git"
-    }
-}
+
  */
 router.post("/addRepo",(req,res,next)=>{
     jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
         if(err || !data || data.level !== "team")
             return res.json({message:"Some error occurred"});
         teams.findOneAndUpdate({name:data.name},{repo:req.body.data})
-        .then((d)=>res.json({message:"Done",data:d}))
+        .then((d)=>res.json({message:"Done"}))
         .catch(next);
     });
 });
@@ -143,6 +125,7 @@ router.post("/addRepo",(req,res,next)=>{
  * @api {post} /team/addPitch1 add initital pitch 
  * @apiName add initital pitch 
  * @apiGroup team
+ * @apiPermission team
  * @apiParamExample {json} request
 {
 	"data":"is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web "
@@ -153,7 +136,7 @@ router.post("/addPitch1",(req,res,next)=>{
         if(err || !data || data.level !== "team")
             return res.json({message:"Some error occurred"});
         teams.findOneAndUpdate({name:data.name},{initialpitch:req.body.data})
-        .then((d)=>res.json({message:"Done",data:d}))
+        .then((d)=>res.json({message:"Done"}))
         .catch(next);
     });
 });
@@ -165,6 +148,7 @@ router.post("/addPitch1",(req,res,next)=>{
 /**
  * @api {post} /team/addPitch2 add final pitch 
  * @apiName add final pitch 
+ * @apiPermission team
  * @apiGroup team
  * @apiParamExample {json} request
 {
@@ -177,10 +161,48 @@ router.post("/addPitch2",(req,res,next)=>{
         if(err || !data || data.level !== "team")
             return res.json({message:"Some error occurred"});
         teams.findOneAndUpdate({name:data.name},{finalpitch:req.body.data})
-        .then((d)=>res.json({message:"Done",data:d}))
+        .then((d)=>res.json({message:"Done"}))
         .catch(next);
     });
 });
 
 
+
+/**
+ * @api {get} /teams/unregister unregister team
+ * @apiGroup teams
+ * @apiName unregister team
+ * @apiPermission team
+ */
+router.get("/unregister",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOneAndRemove({name:data.name})
+        .then((d)=>res.json({message:"Done"}))
+        .catch(next);
+    });
+});
+
+
+
+
+
+/**
+ * @api {get} /teams/deluser/:user unregister member
+ * @apiGroup teams
+ * @apiName unregister member
+ * @apiPermission team
+ */
+router.get("/unregister/:member",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOneAndUpdate({name:data.name},{$pull:{
+            ppl:{name:req.params.member}
+        }})
+        .then((d)=>res.json({message:"Done"}))
+        .catch(next);
+    });
+});
 module.exports = router;
