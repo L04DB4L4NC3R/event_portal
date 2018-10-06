@@ -226,10 +226,14 @@ router.get("/unregister/:member",(req,res,next)=>{
 router.post("/join",(req,res,next)=>{
     teams.findOne({name:req.body.team})
     .then((d)=>{
+        if(d.ppl.length === 4)
+            return res.json({message:"Sorry team full"});
+
         for(let p of d.ppl){
             if(p.rollno === req.body.rollno)
                 return res.json({message:"You are already added to the team"});
         }
+        
         d.ppl.push(req.body);
         d.save().then(()=>res.json({message:"Successfully added to the team"}))
         .catch(next);
@@ -237,4 +241,6 @@ router.post("/join",(req,res,next)=>{
     .catch(next);
 
 });
+
+
 module.exports = router;
