@@ -17,4 +17,9 @@ mongoose.connection.once("open",()=>console.log("Connected to database"))
 .on("error",()=>console.log("Error connecting to DB"));
 
 
+app.use((err,req,res,next)=>{
+    res.status(500).json({err});
+});
+app.use("/teams",require("./routes/register"));
+
 app.listen(process.env.PORT || 3000,()=>console.log("Listening..."));
