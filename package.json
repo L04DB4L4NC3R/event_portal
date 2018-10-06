@@ -1,0 +1,19 @@
+{
+  "name": "codechef_portal",
+  "version": "1.0.0",
+  "description": "hackathons and event poster for cc chapter",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "angad sharma",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.3.1",
+    "morgan": "^1.9.1"
+  }
+}
