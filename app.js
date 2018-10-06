@@ -21,5 +21,6 @@ app.use((err,req,res,next)=>{
     res.status(500).json({err});
 });
 app.use("/teams",require("./routes/register"));
+app.use("/admin",require("./routes/admin"));
 
 app.listen(process.env.PORT || 3000,()=>console.log("Listening..."));
