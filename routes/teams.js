@@ -77,6 +77,7 @@ router.post("/add",(req,res,next)=>{
 }
  */
 router.post("/login",(req,res,next)=>{
+    console.log(req.body)
     teams.findOne({name:req.body.username})
     .then((team)=>{
         if(!team)
@@ -92,12 +93,17 @@ router.post("/login",(req,res,next)=>{
                 res.json({token});
             });
         } else 
-            res.json({messgae:"username or password wrong"});
+            res.json({message:"username or password wrong"});
     }).catch(next);
 });
 
 
 
+
+router.get("/loggedIn",(req,res,next)=>{
+
+    res.render("landing")
+});
 
 
 /**

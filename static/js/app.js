@@ -31,8 +31,7 @@ $(document).ready(function(){
             name:teamname,
             ppl:JSON.stringify(ppl)
         };
-        console.log(data);
-        if(ppl.length>=1)
+        if(ppl.length>=3)
         {
            
             $.ajax({
@@ -43,7 +42,10 @@ $(document).ready(function(){
                 headers:
                     {"Access-Control-Allow-Origin":"*"},
                 success:(data)=>{
-                    console.log(data)
+                    if(data.message)
+                        alert(data.message)
+                    else 
+                        alert("Done")
                 }
                 
                 
@@ -58,6 +60,7 @@ $(document).ready(function(){
     })
     //Event added on team_login button
     $("#team_login").on("click",function(event){
+        event.preventDefault();
         var name=$("#teamname").val();
         var pass=$("#pass").val();
         if(name!="" && pass!="")
@@ -65,13 +68,20 @@ $(document).ready(function(){
             $.ajax({
                 //add header
                 type:"POST",
-                url:"/team/login",
+                url:"/teams/login",
                 data:{
-                    "username":name,
-                    "password":pass
+                    username:name,
+                    password:pass
                 }
-            }).done(function(token){
-                //use token
+            }).done(function(data){
+                {
+                    if(data.message)
+                        alert(data.message)
+                    else{
+                        localStorage.setItem("token",data.token);
+                        window.location.replace("/teams/loggedIn")
+                    }
+                }
             }).fail(function(err){
                 console.log("Error Occured !!");
             })
