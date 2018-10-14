@@ -43,7 +43,9 @@ const jwt = require("jsonwebtoken");
 }
  */
 router.post("/add",(req,res,next)=>{
+    req.body = JSON.parse(req.body);
     console.log(req.body)
+
     let len = req.body.ppl.length;  
     if(req.body.name === '' || len > 4 || len < 1)
         next(new Error("Invalid or incomplete input"));
