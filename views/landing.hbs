@@ -63,11 +63,11 @@
     <div class="col-md-8" style="margin-top:80px;margin-bottom:50px;">
       <h1 class="neon" data-text="YOUR TEAM">YOUR TEAM</h1>
       <ul class="list-group">
-      	<li class="list-group-item" id="teamname">Team Name</li>
+      	<strong><li class="list-group-item" id="teamname">Team Name</li></strong>
+        {{!-- <li class="list-group-item n">Name</li>
         <li class="list-group-item n">Name</li>
         <li class="list-group-item n">Name</li>
-        <li class="list-group-item n">Name</li>
-        <li class="list-group-item n">Name</li>
+        <li class="list-group-item n">Name</li> --}}
       </ul>
       <button class="btn btn-lg" data-toggle="modal" data-target="#memModal" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.2);background-color:#ddd">Add Member</button>
     </div>
@@ -141,8 +141,11 @@ for (i = 0; i < closebtns.length; i++) {
             "Authorization":localStorage.getItem("token")
           },
           success:(data)=>{
-            console.log(data)
-            $("#teamname").html(data.name)
+            $("#teamname").html(data.name);
+           for( let dd of data.ppl){
+              $(".list-group").append(' <li class="list-group-item n">'+dd.name+'</li>')
+
+           }
           }
         })
       })

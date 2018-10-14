@@ -195,7 +195,7 @@ router.get("/unregister",(req,res,next)=>{
 
 
 
-router.get("/teams/view",(req,res,next)=>{
+router.get("/view",(req,res,next)=>{
     jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
         if(err || !data || data.level !== "team")
             return res.json({message:"Some error occurred"});
