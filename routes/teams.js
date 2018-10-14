@@ -43,7 +43,8 @@ const jwt = require("jsonwebtoken");
 }
  */
 router.post("/add",(req,res,next)=>{
-    let len = req.body.ppl.length;
+    console.log(req.body)
+    let len = req.body.ppl.length;  
     if(req.body.name === '' || len > 4 || len < 1)
         next(new Error("Invalid or incomplete input"));
     teams.findOne({name:req.body.name})
