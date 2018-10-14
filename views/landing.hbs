@@ -104,7 +104,7 @@
               <div class="form-group">
                 <input type="tel" class="form-control" id="pnum" placeholder="Mobile Number">
               </div>
-              <button class="btn btn-default mx-auto" type="submit" style="margin:auto;width: 100%; background-color: #157dc3;color:white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);">Done</button>
+              <button id="btn-submit" class="btn btn-default mx-auto" type="submit" style="margin:auto;width: 100%; background-color: #157dc3;color:white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);">Done</button>
             </form>
             </div>
           </div>
@@ -150,6 +150,34 @@ for (i = 0; i < closebtns.length; i++) {
         })
       })
     </script>
+  <script>
+    $("#btn-submit").on("click",(e)=>{
+      e.preventDefault();
+      let name=$("#name").val();
+      let regno=$("#regno").val();
+      let email=$("#email").val();
+      let roomno=$("#roomno").val();
+      let pnum=$("#pnum").val();
+      let team = $("#teamname").html();
 
+      $.ajax({
+        url:"/teams/join",
+        type:"POST",
+        data:{
+          name,
+          email,
+          rollno:regno,
+          roomno,
+          phone:pnum,
+          team
+        },
+        success:(data)=>{
+          console.log(data)
+          location.reload()
+        }
+      })
+
+    })
+  </script>
 </body>
 </html>
