@@ -250,5 +250,29 @@
     "version": "0.0.0",
     "filename": "routes/teams.js",
     "groupTitle": "team"
+  },
+  {
+    "type": "get",
+    "url": "/teams/view",
+    "title": "view team",
+    "group": "team",
+    "name": "view_team",
+    "permission": [
+      {
+        "name": "team"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "response",
+          "content": " {\n    \"_id\": {\n        \"$oid\": \"5bc387bbd04ef644519d8b24\"\n    },\n    \"name\": \"angad\",\n    \"ppl\": [\n        {\n            \"_id\": {\n                \"$oid\": \"5bc387bbd04ef644519d8b27\"\n            },\n            \"name\": \"a\",\n            \"email\": \"a\",\n            \"rollno\": \"a\",\n            \"roomno\": \"a\",\n            \"phone\": \"a\"\n        },\n        {\n            \"_id\": {\n                \"$oid\": \"5bc387bbd04ef644519d8b26\"\n            },\n            \"name\": \"a\",\n            \"email\": \"a\",\n            \"rollno\": \"a\",\n            \"roomno\": \"a\",\n            \"phone\": \"a\"\n        }\n    ],\n    \"__v\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/teams.js",
+    "groupTitle": "team"
   }
 ]

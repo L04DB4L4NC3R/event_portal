@@ -47,7 +47,7 @@ router.post("/add",(req,res,next)=>{
     console.log(req.body)
 
     let len = req.body.ppl.length;  
-    if(req.body.name === '' || len > 4 || len < 1)
+    if(req.body.name === '' || len > 5 || len < 1)
         next(new Error("Invalid or incomplete input"));
     teams.findOne({name:req.body.name})
     .then((team)=>{
@@ -194,7 +194,43 @@ router.get("/unregister",(req,res,next)=>{
 });
 
 
-
+/**
+ * @api {get} /teams/view view team
+ * @apiGroup team
+ * @apiName view team
+ * @apiPermission team
+ * 
+ * @apiParamExample {json} response
+ *  {
+    "_id": {
+        "$oid": "5bc387bbd04ef644519d8b24"
+    },
+    "name": "angad",
+    "ppl": [
+        {
+            "_id": {
+                "$oid": "5bc387bbd04ef644519d8b27"
+            },
+            "name": "a",
+            "email": "a",
+            "rollno": "a",
+            "roomno": "a",
+            "phone": "a"
+        },
+        {
+            "_id": {
+                "$oid": "5bc387bbd04ef644519d8b26"
+            },
+            "name": "a",
+            "email": "a",
+            "rollno": "a",
+            "roomno": "a",
+            "phone": "a"
+        }
+    ],
+    "__v": 0
+}
+ */
 router.get("/view",(req,res,next)=>{
     jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
         if(err || !data || data.level !== "team")
@@ -243,7 +279,7 @@ router.get("/unregister/:member",(req,res,next)=>{
 router.post("/join",(req,res,next)=>{
     teams.findOne({name:req.body.team})
     .then((d)=>{
-        if(d.ppl.length === 4)
+        if(d.ppl.length === 5)
             return res.json({message:"Sorry team full"});
 
         for(let p of d.ppl){
