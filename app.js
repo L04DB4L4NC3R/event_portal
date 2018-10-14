@@ -25,7 +25,7 @@ app.get("/",(req,res,next)=>{
     res.render("index");
 });
 app.get("/docs",(req,res,next)=>{
-    res.sendFIle(path.join(__dirname,"static/docs/docs.html"));
+    res.sendFile(path.join(__dirname,"static/docs/docs.html"));
 });
 app.use((err,req,res,next)=>{
     res.status(500).json({err});

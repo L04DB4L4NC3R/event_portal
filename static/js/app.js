@@ -1,6 +1,6 @@
 $(document).ready(function(){
     console.log("Connected!!");
-    var members=[]
+    var ppl=[]
     //Event added on team_register button !!
     $("#team_register").on("click",function(event){
         console.log("Clicked");
@@ -21,34 +21,34 @@ $(document).ready(function(){
             }
             if(name!="" && regno!="" && email!="" && roomno!="" && pnum!="")
             {
-                console.log("added");
-                members.push(ob);
+                console.log(ob);
+                ppl[i-1] = ob;
             }
             
             
         }
-        var data=
-        {
-            
+
+        var data={        
             name:teamname,
-            ppl:members
+            ppl
         };
         console.log(data);
-        if(members.length>=1)
+        if(ppl.length>=1)
         {
+           
             $.ajax({
                 //add header
                 type:"POST",
                 url:"/teams/add",
+                dataType:"json",
                 data:
                 {
                     
                     name:teamname,
-                    ppl:members
+                    ppl
                 },
                 headers:
-                    {"Access-Control-Allow-Origin":"*"
-                    }
+                    {"Access-Control-Allow-Origin":"*"}
                 
                 
             }).done(function(data){
