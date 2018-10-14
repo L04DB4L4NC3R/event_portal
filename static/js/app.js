@@ -1,28 +1,27 @@
 $(document).ready(function(){
     console.log("Connected!!");
-    var ppl=[]
+    var ppl=[], name, regno, email, roomno, pnum,ob={}
     //Event added on team_register button !!
     $("#team_register").on("click",function(event){
         console.log("Clicked");
         var teamname=$("#teamName").val();
         for(var i=1;i<=4;i++)
         {
-            var name=$("#name"+i).val();
-            var regno=$("#regno"+i).val();
-            var email=$("#email"+i).val();
-            var roomno=$("#roomno"+i).val();
-            var pnum=$("#pnum"+i).val();
-            var ob={
-                name:name,
-                email:email,
+            name=$("#name"+i).val();
+            regno=$("#regno"+i).val();
+            email=$("#email"+i).val();
+            roomno=$("#roomno"+i).val();
+            pnum=$("#pnum"+i).val();
+            ob={
+                name,
+                email,
                 rollno:regno,
-                roomno:roomno,
+                roomno,
                 phone:pnum
             }
             if(name!="" && regno!="" && email!="" && roomno!="" && pnum!="")
             {
-                console.log(ob);
-                ppl[i-1] = ob;
+                ppl.push(ob)
             }
             
             
@@ -30,7 +29,7 @@ $(document).ready(function(){
 
         var data={        
             name:teamname,
-            ppl
+            ppl:JSON.stringify(ppl)
         };
         console.log(data);
         if(ppl.length>=1)
@@ -40,23 +39,14 @@ $(document).ready(function(){
                 //add header
                 type:"POST",
                 url:"/teams/add",
-                dataType:"json",
-                data:
-                {
-                    
-                    name:teamname,
-                    ppl
-                },
+                data,
                 headers:
-                    {"Access-Control-Allow-Origin":"*"}
+                    {"Access-Control-Allow-Origin":"*"},
+                success:(data)=>{
+                    console.log(data)
+                }
                 
                 
-            }).done(function(data){
-                console.log(data);
-            }).fail(function(err){
-                //console.log(members);
-                //console.log(members.length);
-                console.log("Error Occured");
             })
             
         }
