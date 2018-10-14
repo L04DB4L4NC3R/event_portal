@@ -102,7 +102,7 @@ router.post("/login",(req,res,next)=>{
 
 router.get("/loggedIn",(req,res,next)=>{
 
-    res.render("landing")
+    res.render("landing");
 });
 
 
@@ -195,7 +195,15 @@ router.get("/unregister",(req,res,next)=>{
 
 
 
-
+router.get("/teams/view",(req,res,next)=>{
+    jwt.verify(req.get('Authorization'),process.env.SECRET,(err,data)=>{
+        if(err || !data || data.level !== "team")
+            return res.json({message:"Some error occurred"});
+        teams.findOne({name:data.name})
+        .then((d)=>res.json(d))
+        .catch(next);
+    });
+});
 
 /**
  * @api {get} /teams/deluser/:user unregister member

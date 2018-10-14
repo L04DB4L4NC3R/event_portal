@@ -32,5 +32,6 @@ app.use((err,req,res,next)=>{
 });
 app.use("/teams",require("./routes/teams"));
 app.use("/admin",require("./routes/admin"));
+app.use(require("./routes/general"));
 
 app.listen(process.env.PORT || 3000,()=>console.log("Listening..."));
