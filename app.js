@@ -11,7 +11,7 @@ const path = require("path");
 const cors = require("cors");
 app.use(cors());
 
-app.engine('hbs',hbs({defaultLayout:'main'}));
+app.engine('hbs',hbs());
 app.set("view engine",'hbs');
 app.use(bp.json());
 app.use(bp.urlencoded({extended:false}));
@@ -21,9 +21,11 @@ mongoose.connect(process.env.DBURL,{useNewUrlParser:true});
 mongoose.connection.once("open",()=>console.log("Connected to database"))
 .on("error",()=>console.log("Error connecting to DB"));
 
-
+app.get("/",(req,res,next)=>{
+    res.render("index");
+});
 app.get("/docs",(req,res,next)=>{
-    res.sendFile(path.join(__dirname,"static/index.html"));
+    res.sendFIle(path.join(__dirname,"static/docs/docs.html"));
 });
 app.use((err,req,res,next)=>{
     res.status(500).json({err});
