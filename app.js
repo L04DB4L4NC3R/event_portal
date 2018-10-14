@@ -7,6 +7,10 @@ const bp = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 
+
+const cors = require("cors");
+app.use(cors());
+
 app.engine('hbs',hbs({defaultLayout:'main'}));
 app.set("view engine",'hbs');
 app.use(bp.json());
