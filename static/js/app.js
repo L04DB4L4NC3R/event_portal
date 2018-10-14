@@ -22,6 +22,9 @@ $(document).ready(function(){
             if(name!="" && regno!="" && email!="" && roomno!="" && pnum!="")
             {
                 ppl.push(ob)
+            } else{
+                alert("One or more fields empty");
+                location.reload();
             }
             
             

@@ -160,7 +160,10 @@ for (i = 0; i < closebtns.length; i++) {
       let pnum=$("#pnum").val();
       let team = $("#teamname").html();
 
-      $.ajax({
+      if(!name || !regno || !email || !roomno || !pnum || !team){
+        alert("One or more fields empty")
+      } else{
+        $.ajax({
         url:"/teams/join",
         type:"POST",
         data:{
@@ -176,6 +179,8 @@ for (i = 0; i < closebtns.length; i++) {
           location.reload()
         }
       })
+      }
+      
 
     })
   </script>
