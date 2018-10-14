@@ -43,7 +43,6 @@ const jwt = require("jsonwebtoken");
 }
  */
 router.post("/add",(req,res,next)=>{
-    req.body = JSON.parse(req.body);
     console.log(req.body)
 
     let len = req.body.ppl.length;  
