@@ -9,6 +9,8 @@
 <center>
     <body>
     <h1>Here are the teams admin</h1>
+    <input type="text" name="" id="rmvt" placeholder="Select team to remove">
+    <button id="rmv">remove</button>
     <br>
     <div id="data"></div>
 
@@ -32,6 +34,26 @@
                             }
                         }
                     }
+                }
+            })
+
+
+            $("#rmv").on("click",(e)=>{
+                e.preventDefault();
+                let team = $("#rmvt").val();
+                if(!team)
+                    alert("No team provided");
+                else{
+                    $.ajax({
+                        url:`/admin/delete/${team}`,
+                        type:"GET",
+                        headers:{"Authorization":localStorage.getItem("admin")},
+                        success:(data)=>{
+                            if(data.message)
+                                alert(data.message)
+                            location.reload();
+                        }
+                    })
                 }
             })
         })
