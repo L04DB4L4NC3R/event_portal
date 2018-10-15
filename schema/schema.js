@@ -27,6 +27,11 @@ exports.teams = mongoose.model("team",new mongoose.Schema({
             phone:{
                 type:String,
                 required:true
+            },
+            // day scholar or hosteler
+            living:{
+                type:String,
+                required:true
             }
         }],
         required:true

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+</head>
+<center>
+    <body>
+    <h1>Here are the teams admin</h1>
+    <br>
+    <div id="data"></div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(()=>{
+            $.ajax({
+                type:"GET",
+                url:"/admin/view",
+                headers:{"Authorization":localStorage.getItem("admin")},
+                success:(data)=>{
+                    if(data.message)
+                        alert(data.message)
+                    else{
+                        for(let inf of data){
+                            $("#data").append(inf);
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+    
+</body>
+</center>
+</html>

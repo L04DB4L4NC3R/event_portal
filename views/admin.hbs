@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+</head>
+<body>
+    <form action="/admin/login">
+        <input type="text" name="" id="name" placeholder="username"> <br>
+        <input type="text" name="" id="password" placeholder="password"> <br>
+    <button class="btn btn-default">submit</button> <br>
+    </form>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $("button").on("click",(e)=>{
+            e.preventDefault();
+            let username = $("#name").val();
+            let password = $("#password").val();
+            if(!username || !password)
+                alert("One or more fields empty");
+
+            else{
+                $.ajax({
+                    url:"/admin/login",
+                    type:"POST",
+                    data:{username,password},
+                    success:(data)=>{
+                        if(data.message)
+                            alert(data.message);
+                        else{
+                            localStorage.setItem("admin",data.token);
+                            window.location.replace("/admin/land");
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

@@ -5,6 +5,11 @@ const {
 const jwt = require("jsonwebtoken");
 
 
+
+router.get("/",(req,res,next)=>{
+    res.render("admin")
+})
+
 /**
  * @api {post} /admin/login login admin
  * @apiName login admin
@@ -30,6 +35,12 @@ router.post("/login",(req,res,next)=>{
         });
     } else
         res.json({message:"Wrong credentials"});
+});
+
+
+
+router.get("/land",(req,res,next)=>{
+   res.render("land_admin");
 });
 
 
