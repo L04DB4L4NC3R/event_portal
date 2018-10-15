@@ -12,7 +12,7 @@
     <br>
     <div id="data"></div>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     
     <script>
@@ -26,7 +26,10 @@
                         alert(data.message)
                     else{
                         for(let inf of data){
-                            $("#data").append(inf);
+                            $("#data").append('<h2><strong style="color:red">'+inf.name+'</strong></h2> <br>');
+                            for(let j of inf.ppl){
+                                $("#data").append(j.name + "<br>" + j.email + "<br>" + j.phone + "<br><br><br>" )
+                            }
                         }
                     }
                 }
